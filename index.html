@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://apis.google.com/js/platform.js" async defer> </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-functions.js"></script>
+    <title>For your signin</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col s12">
+                <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Card Title</span>
+                    <p>Aunt Dunni Please click the below button to signin</p>
+                </div>
+                <div class="card-action">
+                    <a id="signinbtn" >Signin</a>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div id="output" class="center-align" style="padding:20px"></div>
+    </div>
+</body>
+<script>
+
+var firebaseConfig = {
+    apiKey: "AIzaSyDvtqIZ9MicjW8MugmD7g6fE3O90Dt27qE",
+    authDomain: "grace-stock.firebaseapp.com",
+    databaseURL: "https://grace-stock.firebaseio.com",
+    projectId: "grace-stock",
+    storageBucket: "grace-stock.appspot.com",
+    messagingSenderId: "115052019253",
+    appId: "1:115052019253:web:393e145f6f3800fca73b7c",
+    measurementId: "G-CY4FCTCZEM"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+var provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope('profile');
+provider.addScope('email');
+provider.addScope('https://www.googleapis.com/auth/plus.me');
+function signin(){
+  firebase.auth().signInWithPopup(provider);
+}
+document.getElementById('signinbtn').addEventListener('click',signin, false)
+firebase.auth().onAuthStateChanged(function(user) {
+  window.user = user; // user is undefined if no user signed in
+    if(user){
+        document.getElementById('output').innerHTML = `
+        <div class="green lighten-3 center-align" style="padding:20px">Successfully Signed In</div>
+        `;
+       setTimeout(() => {
+           location.href = "https://peckyboy.github.io/vidplayer/"
+       }, 6000);
+    }
+ });
+</script>
+</html>
